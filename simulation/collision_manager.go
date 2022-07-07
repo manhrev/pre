@@ -19,6 +19,10 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 	for _, object := range manager.world.Objects {
 		x, y := manager.world.Map.TileContain(object)
 		//fmt.Println(manager.world.Map.GetTilesAt(int(x), int(y)))
+		if manager.world.Map.GetTilesAt(int(x), int(y)) == 0 {
+			manager.world.RemoveObject(object.Id())
+			return
+		}
 		if manager.world.Map.GetTilesAt(int(x), int(y)) != 1 {
 			object.SetFacing(object.Facing() + 2.1415)
 		}

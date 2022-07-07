@@ -36,3 +36,9 @@ func (world *World) AddPlayer(clientID uint32, player *Player) {
 	world.Players[clientID] = player
 	world.Objects[clientID] = player
 }
+
+func (world *World) RemoveObject(id uint32) {
+	delete(world.Objects, id)
+	delete(world.Players, id)
+
+}

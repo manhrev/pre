@@ -7,5 +7,5 @@ const (
 
 	// Player's radius
 	PlayerSize  = 20
-	MapTileSize = 80
+	MapTileSize = 120
 )
