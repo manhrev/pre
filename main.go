@@ -8,14 +8,12 @@ import (
 	"time"
 )
 
-var winTitle string = "Go-SDL2 Events"
-var winWidth, winHeight int32 = 800, 600
-
 func main() {
 	renderer.Init()
 	defer renderer.Destroy()
 
 	world := state.NewWorld()
+
 	objManager := simulation.NewObjectManager(world)
 	collisionManager := simulation.NewCollisionManager(world)
 
@@ -39,16 +37,21 @@ func main() {
 	id := uint32(0)
 
 	for _ = range time.Tick(20 * time.Millisecond) {
-		if id < 50 {
+		if id < 3 {
 			id++
-			world.NewPlayerAt(id, 300, 300)
-			world.Players[id].SetFacing((rand.Float64() - 0.5) * 3)
-			world.Players[id].SetVelocity(rand.Float64()*20 + 1)
+			world.NewPlayerAt(id, 350, 350)
+			world.Players[id].SetFacing((rand.Float64()) * 2 * 3.1415)
+			world.Players[id].SetVelocity(rand.Float64()*15 + 1)
+			//world.Players[id].SetVelocity(0)
 		}
 
 		objManager.UpdateObjects()
+		collisionManager.ResolveCollisionsOnMap()
 		collisionManager.ResolveCollisions()
-		renderer.Render(world)
+		if !renderer.Render(world) {
+			return
+		}
+
 	}
 
 }

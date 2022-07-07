@@ -18,19 +18,16 @@ func NewObjectManager(world *state.World) *ObjectManager {
 }
 
 func (manage *ObjectManager) UpdateObjects() {
+	// Update object position
 	for _, object := range manage.world.Objects {
 		// for testing
-		if object.DistanceTo(state.NewObjectState(100, types.NewPoint(400, 300), 0)) >= 350 {
+		if object.DistanceTo(state.NewObjectState(100, types.NewPoint(450, 450), 0)) >= 900 {
 
 			object.SetFacing(object.Facing() + math.Pi)
-			object.SetPosition(object.Position().Add(object.VelocityVect().Multiply(4)))
+			object.SetPosition(object.Position().Add(object.VelocityVect().Multiply(2)))
 		}
 		// position update
 		object.SetPosition(object.Position().Add(object.VelocityVect()))
 
-		// for testing
-		// object.SetFacing(
-		// 	object.Facing() + (rand.Float64() - 0.5),
-		// )
 	}
 }

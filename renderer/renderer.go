@@ -10,10 +10,11 @@ import (
 )
 
 var winTitle string = "Go-SDL2 Events"
-var winWidth, winHeight int32 = 800, 600
+var winWidth, winHeight int32 = 800, 800
 
 var window *sdl.Window
 var renderer *sdl.Renderer
+var event sdl.Event
 
 func Destroy() {
 	sdl.Quit()
@@ -42,9 +43,43 @@ func Init() {
 	}
 }
 
-func Render(world *state.World) {
-	renderer.SetDrawColor(0, 0, 0, 255)
+func Render(world *state.World) bool {
+	for event = sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+		switch event.(type) {
+		case *sdl.QuitEvent:
+			return false
+
+		}
+	}
 	renderer.Clear()
+	for x := 0; x < world.Map.GetXn(); x++ {
+		for y := 0; y < world.Map.GetYn(); y++ {
+			block := &sdl.Rect{
+				X: int32(constants.MapTileSize * x),
+				Y: int32(constants.MapTileSize * y),
+				W: constants.MapTileSize,
+				H: constants.MapTileSize,
+			}
+
+			switch world.Map.GetTilesAt(x, y) {
+			case 1:
+				renderer.SetDrawColor(0, 0, 255, 255)
+				break
+			case 0:
+				renderer.SetDrawColor(255, 255, 255, 255)
+				break
+			case 2:
+				renderer.SetDrawColor(0, 0, 0, 255)
+				break
+
+			}
+
+			renderer.FillRect(block)
+		}
+	}
+
+	renderer.SetDrawColor(0, 0, 0, 255)
+
 	var rects []*sdl.Rect
 	for _, obj := range world.Objects {
 		rects = append(rects, &sdl.Rect{
@@ -59,8 +94,16 @@ func Render(world *state.World) {
 		renderer.FillRect(rect)
 	}
 
-	renderer.Present()
+	// renderer.SetDrawColor(255, 255, 255, 255)
+	// renderer.FillRect(&sdl.Rect{
+	// 	X: 900,
+	// 	Y: 900,
+	// 	W: 20,
+	// 	H: 20,
+	// })
 
+	renderer.Present()
+	return true
 	// renderer.SetDrawColor(255, 0, 0, 255)
 	// renderer.Clear()
 

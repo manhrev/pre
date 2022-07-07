@@ -15,6 +15,16 @@ func NewCollisionManager(world *state.World) *CollisionManager {
 	return &CollisionManager{world: world}
 }
 
+func (manager *CollisionManager) ResolveCollisionsOnMap() {
+	for _, object := range manager.world.Objects {
+		x, y := manager.world.Map.TileContain(object)
+		//fmt.Println(manager.world.Map.GetTilesAt(int(x), int(y)))
+		if manager.world.Map.GetTilesAt(int(x), int(y)) != 1 {
+			object.SetFacing(object.Facing() + 2.1415)
+		}
+	}
+}
+
 func (manager *CollisionManager) ResolveCollisions() {
 	collided := make(map[state.Object]bool)
 	for _, object := range manager.world.Objects {

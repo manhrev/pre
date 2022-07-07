@@ -1,11 +1,14 @@
 package state
 
-import "battleground/types"
+import (
+	"battleground/types"
+)
 
 type World struct {
 	Objects        map[uint32]Object
 	Players        map[uint32]*Player
 	PhysicsFrameID uint32
+	Map            *Map
 }
 
 func NewWorld() *World {
@@ -13,6 +16,7 @@ func NewWorld() *World {
 		Objects:        make(map[uint32]Object),
 		Players:        make(map[uint32]*Player),
 		PhysicsFrameID: 0,
+		Map:            NewMap(),
 	}
 }
 
