@@ -40,18 +40,20 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 					X: float64((x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x-1), int(y)) == 2 {
 				//fmt.Println("left")
@@ -59,22 +61,25 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 					X: float64((x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				//println(distObjToTileX, distObjToTileY)
+					//println(distObjToTileX, distObjToTileY)
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					//fmt.Println("collision with left")
-					if distObjToTileX > distObjToTileY {
-						//fmt.Println("x far")
-						object.SetPosition(object.Position().Add(vX.Multiply(-(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize))))
-					} else {
-						//fmt.Println("y far")
-						object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						//fmt.Println("collision with left")
+						if distObjToTileX > distObjToTileY {
+							//fmt.Println("x far")
+							object.SetPosition(object.Position().Add(vX.Multiply(-(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize))))
+						} else {
+							//fmt.Println("y far")
+							object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x), int(y-1)) == 2 {
 				//println("top")
@@ -82,101 +87,118 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 					X: float64((x)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize))))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize))))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x), int(y+1)) == 2 {
 				vObjToTile := &types.Vector{
 					X: float64((x)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x-1), int(y-1)) == 2 {
 				vObjToTile := &types.Vector{
 					X: float64((x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize))))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize))))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize))))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize))))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x-1), int(y+1)) == 2 {
 				vObjToTile := &types.Vector{
 					X: float64((x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize))))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize))))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x+1), int(y-1)) == 2 {
 				vObjToTile := &types.Vector{
 					X: float64((x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				// Collision occured
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize))))
+					// Collision occured
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize))))
+						}
 					}
 				}
+
 			}
 			if manager.world.Map.GetTilesAt(int(x+1), int(y+1)) == 2 {
 				vObjToTile := &types.Vector{
 					X: float64((x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
 					Y: float64((y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
 				}
-				distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
-				distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
+				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
+					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
+					distObjToTileY := math.Abs(vObjToTile.Length() * math.Sin(vObjToTile.Radians()))
 
-				// Collision occured
+					// Collision occured
 
-				if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
-					if distObjToTileX > distObjToTileY {
-						object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
-					} else {
-						object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+					if distObjToTileX-constants.PlayerSize < constants.MapTileSize/2 && distObjToTileY-constants.PlayerSize < constants.MapTileSize/2 {
+						if distObjToTileX > distObjToTileY {
+							object.SetPosition(object.Position().Add(vX.Multiply(-distObjToTileX + constants.MapTileSize/2 + constants.PlayerSize)))
+						} else {
+							object.SetPosition(object.Position().Add(vY.Multiply(-distObjToTileY + constants.MapTileSize/2 + constants.PlayerSize)))
+						}
 					}
 				}
 
