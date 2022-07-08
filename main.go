@@ -39,13 +39,14 @@ func main() {
 	for _ = range time.Tick(20 * time.Millisecond) {
 		if id%30 == 0 {
 
-			world.NewPlayerAt(id, 550, 350)
+			world.NewPlayerAt(id, 400, 350)
 			world.Players[id].SetFacing((rand.Float64()) * 2 * 3.1415)
-			world.Players[id].SetVelocity(rand.Float64()*5 + 1)
+			world.Players[id].SetVelocity(rand.Float64()*10 + 1)
 			//world.Players[id].SetVelocity(0)
 		}
 		id++
 		objManager.UpdateObjects()
+		collisionManager.ResolveCollisionsOnMap()
 		collisionManager.ResolveCollisions()
 		collisionManager.ResolveCollisionsOnMap()
 

@@ -1,0 +1,19 @@
+syntax = "proto3";
+package battlefround;
+option go_packaga = "pb";
+
+message Message {
+    oneof content {
+
+    }
+}
+
+message Point {
+    sint32 x=1;
+    sint32 y=1;
+}
+
+message Vector {
+    float x=1;
+    float y=2;
+}
