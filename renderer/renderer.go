@@ -51,6 +51,7 @@ func Render(world *state.World) bool {
 
 		}
 	}
+
 	renderer.Clear()
 	for x := 0; x < world.Map.GetXn(); x++ {
 		for y := 0; y < world.Map.GetYn(); y++ {
@@ -64,6 +65,7 @@ func Render(world *state.World) bool {
 			switch world.Map.GetTilesAt(x, y) {
 			case 1:
 				renderer.SetDrawColor(0, 0, 255, 255)
+
 				break
 			case 0:
 				renderer.SetDrawColor(255, 255, 255, 255)
@@ -80,18 +82,9 @@ func Render(world *state.World) bool {
 
 	renderer.SetDrawColor(0, 0, 0, 255)
 
-	var rects []*sdl.Rect
 	for _, obj := range world.Objects {
-		rects = append(rects, &sdl.Rect{
-			X: obj.Position().X - constants.PlayerSize,
-			Y: obj.Position().Y - constants.PlayerSize,
-			W: constants.PlayerSize * 2,
-			H: constants.PlayerSize * 2})
-	}
+		draw_circle(renderer, int(obj.Position().X), int(obj.Position().Y), constants.PlayerSize, sdl.Color{R: 0, G: 255, B: 255, A: 255})
 
-	for _, rect := range rects {
-		renderer.SetDrawColor(0, 255, 255, 255)
-		renderer.FillRect(rect)
 	}
 
 	// renderer.SetDrawColor(255, 255, 255, 255)
@@ -107,4 +100,17 @@ func Render(world *state.World) bool {
 	// renderer.SetDrawColor(255, 0, 0, 255)
 	// renderer.Clear()
 
+}
+
+func draw_circle(renderer *sdl.Renderer, x int, y int, radius int, color sdl.Color) {
+	renderer.SetDrawColor(color.R, color.G, color.B, color.A)
+	for w := 0; w < radius*2; w++ {
+		for h := 0; h < radius*2; h++ {
+			dx := radius - w // horizontal offset
+			dy := radius - h // vertical offset
+			if (dx*dx + dy*dy) <= (radius * radius) {
+				renderer.DrawPoint(int32(x+dx), int32(y+dy))
+			}
+		}
+	}
 }
