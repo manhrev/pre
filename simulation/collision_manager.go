@@ -37,8 +37,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			// Check collision with wall
 			if manager.world.Map.GetTilesAt(int(x+1), int(y)) == 2 {
 				vObjToTile := &types.Vector{
-					X: float64((x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -58,8 +58,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			if manager.world.Map.GetTilesAt(int(x-1), int(y)) == 2 {
 				//fmt.Println("left")
 				vObjToTile := &types.Vector{
-					X: float64((x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -84,8 +84,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			if manager.world.Map.GetTilesAt(int(x), int(y-1)) == 2 {
 				//println("top")
 				vObjToTile := &types.Vector{
-					X: float64((x)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -104,8 +104,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			}
 			if manager.world.Map.GetTilesAt(int(x), int(y+1)) == 2 {
 				vObjToTile := &types.Vector{
-					X: float64((x)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -124,8 +124,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			}
 			if manager.world.Map.GetTilesAt(int(x-1), int(y-1)) == 2 {
 				vObjToTile := &types.Vector{
-					X: float64((x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -144,8 +144,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			}
 			if manager.world.Map.GetTilesAt(int(x-1), int(y+1)) == 2 {
 				vObjToTile := &types.Vector{
-					X: float64((x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -164,8 +164,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			}
 			if manager.world.Map.GetTilesAt(int(x+1), int(y-1)) == 2 {
 				vObjToTile := &types.Vector{
-					X: float64((x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y-1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))
@@ -184,8 +184,8 @@ func (manager *CollisionManager) ResolveCollisionsOnMap() {
 			}
 			if manager.world.Map.GetTilesAt(int(x+1), int(y+1)) == 2 {
 				vObjToTile := &types.Vector{
-					X: float64((x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X),
-					Y: float64((y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y),
+					X: float64(x+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().X,
+					Y: float64(y+1)*constants.MapTileSize + constants.MapTileSize/2 - object.Position().Y,
 				}
 				if vObjToTile.Length() < math.Sqrt(2)*constants.MapTileSize/2+constants.PlayerSize {
 					distObjToTileX := math.Abs(vObjToTile.Length() * math.Cos(vObjToTile.Radians()))

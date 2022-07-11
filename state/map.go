@@ -47,5 +47,5 @@ func (m *Map) GetXn() int {
 }
 
 func (m *Map) TileContain(object Object) (int32, int32) {
-	return object.Position().X / constants.MapTileSize, object.Position().Y / constants.MapTileSize
+	return int32(object.Position().X / constants.MapTileSize), int32(object.Position().Y / constants.MapTileSize)
 }

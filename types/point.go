@@ -7,8 +7,8 @@ import (
 
 // Point structs holds 2D vector with int coordinates.
 type Point struct {
-	X int32
-	Y int32
+	X float64
+	Y float64
 }
 
 // ZeroPoint initializes new zero vector.
@@ -17,15 +17,15 @@ func ZeroPoint() *Point {
 }
 
 // NewPoint initializes new vector with given parameters.
-func NewPoint(x, y int32) *Point {
+func NewPoint(x, y float64) *Point {
 	return &Point{X: x, Y: y}
 }
 
 // NewPointFromPolar initializes new vector form given polar coordinates.
 func NewPointFromPolar(angle float64, radius uint32) *Point {
 	return &Point{
-		X: int32(float64(radius) * math.Cos(angle)),
-		Y: int32(float64(radius) * math.Sin(angle)),
+		X: (float64(radius) * math.Cos(angle)),
+		Y: (float64(radius) * math.Sin(angle)),
 	}
 }
 
@@ -37,8 +37,8 @@ func (point *Point) String() string {
 // Add adds given Vector and return Point.
 func (point *Point) Add(other *Vector) *Point {
 	return &Point{
-		X: point.X + int32(other.X),
-		Y: point.Y + int32(other.Y),
+		X: point.X + (other.X),
+		Y: point.Y + (other.Y),
 	}
 }
 

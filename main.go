@@ -49,7 +49,7 @@ func main() {
 		collisionManager.ResolveCollisionsOnMap()
 		collisionManager.ResolveCollisions()
 		collisionManager.ResolveCollisionsOnMap()
-
+		println(len(world.Objects))
 		if !renderer.Render(world) {
 			return
 		}

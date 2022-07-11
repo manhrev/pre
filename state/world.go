@@ -26,7 +26,7 @@ func (world *World) NewPlayer(clientID uint32) *Player {
 	return player
 }
 
-func (world *World) NewPlayerAt(clientID uint32, x int32, y int32) *Player {
+func (world *World) NewPlayerAt(clientID uint32, x float64, y float64) *Player {
 	player := NewPlayer(clientID, &types.Point{X: x, Y: y})
 	world.AddPlayer(clientID, player)
 	return player
