@@ -22,5 +22,8 @@ func (manage *ObjectManager) UpdateObjects() {
 		// position update
 		object.SetPosition(object.Position().Add(object.VelocityVect()))
 
+		// apply angularVelocity
+		object.SetFacing(object.Facing() + object.AngularVelocity())
+
 	}
 }

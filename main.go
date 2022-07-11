@@ -42,6 +42,7 @@ func main() {
 			world.NewPlayerAt(id, 400, 350)
 			world.Players[id].SetFacing((rand.Float64()) * 2 * 3.1415)
 			world.Players[id].SetVelocity(rand.Float64()*10 + 1)
+			world.Players[id].SetAngularVelocity((rand.Float64() - 0.5) / 6)
 			//world.Players[id].SetVelocity(0)
 		}
 		id++
@@ -49,7 +50,7 @@ func main() {
 		collisionManager.ResolveCollisionsOnMap()
 		collisionManager.ResolveCollisions()
 		collisionManager.ResolveCollisionsOnMap()
-		println(len(world.Objects))
+		//println(len(world.Objects))
 		if !renderer.Render(world) {
 			return
 		}

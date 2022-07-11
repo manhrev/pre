@@ -9,12 +9,13 @@ type Object interface {
 	VelocityVect() *types.Vector
 	Velocity() float64
 	Facing() float64
-
+	AngularVelocity() float64
 	//Hp() uint32
 
 	SetPosition(*types.Point)
 	SetVelocity(float64)
 	SetFacing(float64)
+	SetAngularVelocity(float64)
 
 	DetectCollision(other Object) bool
 	DistanceTo(other Object) float64

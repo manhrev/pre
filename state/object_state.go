@@ -8,10 +8,11 @@ import (
 )
 
 type ObjectState struct {
-	id       uint32
-	position *types.Point
-	velocity float64 //0 to 2pi
-	facing   float64
+	id              uint32
+	position        *types.Point
+	velocity        float64 //0 to 2pi
+	facing          float64
+	angularVelocity float64
 	//hp       uint32
 
 	spawnTimestamp time.Time
@@ -52,6 +53,14 @@ func (objectState *ObjectState) Velocity() float64 {
 
 func (objectState *ObjectState) SetVelocity(velocity float64) {
 	objectState.velocity = velocity
+}
+
+func (objectState *ObjectState) AngularVelocity() float64 {
+	return objectState.angularVelocity
+}
+
+func (objectState *ObjectState) SetAngularVelocity(angularVelocity float64) {
+	objectState.angularVelocity = angularVelocity
 }
 
 func (objectState *ObjectState) Facing() float64 {
