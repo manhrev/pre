@@ -1,6 +1,7 @@
 package game
 
 import (
+	"battleground/events"
 	"log"
 	"time"
 
@@ -104,7 +105,8 @@ func (c *Client) listenRead() {
 
 		log.Println(message)
 
-		// TODO: handle message
+		// TODO: handle message, for example
+		c.gameRoom.eventHub.FireEvent(events.TimeTick{})
 
 	}
 }

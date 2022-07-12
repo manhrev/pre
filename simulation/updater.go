@@ -22,3 +22,14 @@ func NewUpdater(world *state.World, eventHub *events.EventHub) *Updater {
 		collisionManager: NewCollisionManager(world),
 	}
 }
+
+func (updater *Updater) updatePhysics() {
+	updater.objectManager.UpdateObjects()
+	updater.collisionManager.ResolveCollisionsOnMap()
+	updater.collisionManager.ResolveCollisions()
+	updater.collisionManager.ResolveCollisionsOnMap()
+}
+
+func (updater *Updater) HandleTimeTick(*events.TimeTick) {
+	updater.updatePhysics()
+}

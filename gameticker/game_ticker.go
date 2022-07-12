@@ -22,7 +22,9 @@ func (ticker *PhysicsTicker) Run() {
 	// remember when to stop a physic ticker goroutine
 	for range time.Tick(constants.PhysicFrameDuration) {
 		//TODO: send time tick event
-
+		ticker.eventHub.FireEvent(events.TimeTick{
+			FrameId: i,
+		})
 		i++
 	}
 }
