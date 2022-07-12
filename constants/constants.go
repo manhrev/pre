@@ -2,6 +2,7 @@ package constants
 
 import "time"
 
+// In game constants
 const (
 	PhysicFrameDuration = 20 * time.Millisecond
 

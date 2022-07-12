@@ -9,7 +9,7 @@ type PlayerManager struct {
 	world *state.World
 }
 
-func NewSpaceShipManager(world *state.World) *PlayerManager {
+func NewPlayerManager(world *state.World) *PlayerManager {
 	return &PlayerManager{
 		world: world,
 	}

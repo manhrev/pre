@@ -1,44 +1,171 @@
 syntax = "proto3";
-package battlefround;
-option go_package = "pb";
+option go_package = "demogame/api";
 
-message Message {
-    oneof content {
-        Map map = 1;
-        World world = 2;
+service MiniBattleService {
+    // rpc Register(RegisterRequest) returns (RegisterReply);
+    // rpc Login(LoginRequest) returns (LoginReply);
+    // rpc ShowProfile(ShowProfileRequest) returns (ShowProfileReply);
+    // rpc ShowLeaderBoard(ShowLeaderBoardRequest) returns (ShowLeaderBoardReply);
+}
+
+message ServerMessage {
+    oneof payload {
+        //UserInputRequest input = 1;
+        //UpdatePosition pos_update = 2;
+        // CreateRoomRequest create_room_request = 3;
+        // CreateRoomReply create_room_reply = 4;
+        //StartGameRequest start_game_request = 5;
+
+        // Reply when client want to join a game, include game map information
+        JoinRoomReply joinRoomReply = 1;
+
+        // Game state update for all client
+        GameState gameState = 2;
+
+        // Send when a player left the game
+        PlayerLeft playerLeft = 3;
+
+        // Send when game start
+        GameStarted gameStarted = 4;
+
+        // Send when game send
+        GameEnded gameEnded = 5;
+
+
     }
 }
 
-message Point {
-    float x = 1;
-    float y = 2;
+message JoinRoomReply {
+    Status status = 1;
+    repeated Grid map = 2;
+
+    message Grid {
+        enum GridComponent {
+            HOLE = 0;
+            GROUND = 1;
+            WALL = 2;
+            MUD = 3;
+            BOOST = 4;
+            FLOW = 5;
+            START = 6;
+            DES = 7;
+        }
+        repeated GridComponent object = 1;
+    }
 }
 
-message Vector {
+enum Status {
+    FAIL = 0;
+    SUCCESSFUL = 1;
+}
+
+
+message GameState {
+    repeated Player players = 1;
+
+}
+
+message GameStarted {
+
+}
+
+message GameEnded {
+    
+}
+
+message PlayerLeft {
+    int32 playerID = 1;
+}
+
+message UserMessage {
+    oneof payload {
+
+        // Client control 
+        UserInput userInput = 1;
+
+        // Client want to join a game
+        JoinRoomRequest joinRoom = 2;
+
+        // 
+    }
+}
+
+message Position {
     float x = 1;
     float y = 2;
 }
 
 message Player {
-    uint32 id = 1;
-    Point position = 2;
+    int32 playerID = 1;
+    float facing = 2;
     float velocity = 3;
-    float facing = 4;
-
+    Position pos = 4;
 }
 
-message Ping {
-    uint32 Id = 1;
-}
-message Pong {
-    uint32 Id = 1;
+// message User {
+//     string userName = 1;
+// }
+
+// message RegisterRequest {
+//     User user = 1;
+// }
+
+// message RegisterReply {
+//     Status status = 1;
+// }
+
+// message LogInRequest {
+//     User user = 1;
+// }
+
+// message LogInReply {
+//     Status status = 1;
+//     string token = 2;
+// }
+
+message UserInput {
+    // Direction and angle to 2d-map
+    bool move = 1;
+    float facing = 2;
 }
 
-message World {
+message UpdatePosition {
     repeated Player players = 1;
 }
 
-message Map {
 
+// message CreateRoomRequest {
+//     User user = 1;
+// }
+
+// message CreateRoomReply {
+//     Status status = 1;
+//     string roomID = 2;
+// }
+
+// message JoinRoomRequest {
+//     string roomID = 1;
+// }
+
+// message JoinRoomReply {
+//     Status status = 1;
+// }
+
+// message LeaveRoomRequest {
+//     User user = 1;
+//     string roomID = 2;
+// }
+
+// message LeaveRoomReply {
+//     Status status = 1;
+// }
+
+message JoinRoomRequest {
+    repeated int64 userID = 1;
 }
+
+
+
+
+
 
