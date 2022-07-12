@@ -53,12 +53,14 @@ func (h *EventHub) RunEventLoop() {
 func (h *EventHub) handle(event any) {
 	switch reflect.TypeOf(event) {
 	case reflect.TypeOf(TimeTick{}):
-		e, ok := event.(*TimeTick)
+
+		e, ok := event.(TimeTick)
+
 		if !ok {
-			log.Println("Event error")
+			log.Println("Event timetick error")
 			break
 		}
-		h.timeTickListener.HandleTimeTick(e)
+		h.timeTickListener.HandleTimeTick(&e)
 		break
 	case reflect.TypeOf(UserInput{}):
 		e, ok := event.(*UserInput)
