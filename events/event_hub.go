@@ -19,19 +19,25 @@ type UserInputListener interface {
 	HandleUserInput(*UserInput)
 }
 
+type UserJoinedListener interface {
+	HandleUserJoined(*UserJoined)
+}
+
 type EventHub struct {
 	// Event queues
 	eventQueue chan any
 	// Listeners list
-	timeTickListener  []TimeTickListener
-	userInputListener []UserInputListener
+	timeTickListener   []TimeTickListener
+	userInputListener  []UserInputListener
+	userJoinedListener []UserJoinedListener
 }
 
 func NewEventHub() *EventHub {
 	return &EventHub{
-		eventQueue:        make(chan any, eventQueueCapacity),
-		timeTickListener:  []TimeTickListener{},
-		userInputListener: []UserInputListener{},
+		eventQueue:         make(chan any, eventQueueCapacity),
+		timeTickListener:   []TimeTickListener{},
+		userInputListener:  []UserInputListener{},
+		userJoinedListener: []UserJoinedListener{},
 	}
 }
 
@@ -42,6 +48,10 @@ func (h *EventHub) RegisterTimeTickListener(listener TimeTickListener) {
 
 func (h *EventHub) RegisterUserInputListener(listener UserInputListener) {
 	h.userInputListener = append(h.userInputListener, listener)
+}
+
+func (h *EventHub) RegisterUserJoinedListener(listener UserJoinedListener) {
+	h.userJoinedListener = append(h.userJoinedListener, listener)
 }
 
 func (h *EventHub) RunEventLoop() {
@@ -57,7 +67,7 @@ func (h *EventHub) handle(event any) {
 	case reflect.TypeOf(&TimeTick{}):
 		e, ok := event.(*TimeTick)
 		if !ok {
-			log.Println("Event timetick error")
+			log.Println("Timetick event error")
 			break
 		}
 		for _, listener := range h.timeTickListener {
@@ -68,11 +78,20 @@ func (h *EventHub) handle(event any) {
 	case reflect.TypeOf(&UserInput{}):
 		e, ok := event.(*UserInput)
 		if !ok {
-			log.Println("Event error")
+			log.Println("UserInput event error")
 			break
 		}
 		for _, listener := range h.userInputListener {
 			listener.HandleUserInput(e)
+		}
+		break
+	case reflect.TypeOf(&UserJoined{}):
+		e, ok := event.(*UserJoined)
+		if !ok {
+			log.Println("UserJoined event error")
+		}
+		for _, listener := range h.userJoinedListener {
+			listener.HandleUserJoined(e)
 		}
 		break
 	default:

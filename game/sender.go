@@ -1,7 +1,15 @@
 package game
 
-type Sender struct{}
+import "battleground/state"
 
-func NewSender() *Sender {
-	return &Sender{}
+type Sender struct {
+	room  *GameRoom
+	world *state.World
+}
+
+func NewSender(room *GameRoom, world *state.World) *Sender {
+	return &Sender{
+		room:  room,
+		world: world,
+	}
 }

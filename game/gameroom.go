@@ -5,8 +5,6 @@ import (
 	"battleground/gameticker"
 	"battleground/simulation"
 	"battleground/state"
-	"math"
-	"math/rand"
 )
 
 type GameRoom struct {
@@ -54,38 +52,50 @@ func NewGameRoom() *GameRoom {
 	eventHub := events.NewEventHub()
 	physicTicker := gameticker.NewPhysicsTicker(eventHub)
 	updater := simulation.NewUpdater(world, eventHub)
+	sender := NewSender(nil, world) // room pointer in sender is nil, update this pointer before this func returns
 	eventHub.RegisterTimeTickListener(updater)
+	eventHub.RegisterUserJoinedListener(updater)
 
-	return &GameRoom{
-		roomID:       1,
+	room := &GameRoom{
+		running:      false,
+		roomID:       1, //room id ?
 		world:        world,
 		updater:      updater,
 		eventHub:     eventHub,
 		clients:      make(map[uint32]*Client),
-		sender:       NewSender(),
+		sender:       sender,
 		physicTicker: physicTicker,
 	}
+	sender.room = room
+	return room
 }
 
 // Start game room
 func (room *GameRoom) Start() {
+
+	// For testing
+	room.clients[1] = &Client{username: "dfs"}
+	room.clients[2] = &Client{username: "lol"}
+
+	// From room.clients -> create players in world
+	for clientId, client := range room.clients {
+		room.eventHub.FireEvent(&events.UserJoined{
+			ClientID: clientId,
+			UserName: client.username,
+		})
+	}
+
+	// Run go routines
 	go room.physicTicker.Run()
 	go room.eventHub.RunEventLoop()
 
-	// TODO: from room.clients -> create players in world
-
-	// for testing
-	room.world.NewPlayerAt(1, 400, 400)
-	room.world.Players[1].SetFacing(math.Pi / 4)
-	room.world.Players[1].SetVelocity(rand.Float64()/4 + 1)
-	//room.world.Players[1].SetAngularVelocity((rand.Float64() - 0.5) / 6)
 }
 
 func (room *GameRoom) Stop() {
 	// Kill all goroutine
 }
 
-//for testing
+//for rendering
 func (room *GameRoom) World() *state.World {
 	return room.world
 }
