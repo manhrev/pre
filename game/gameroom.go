@@ -5,6 +5,7 @@ import (
 	"battleground/gameticker"
 	"battleground/simulation"
 	"battleground/state"
+	"math"
 	"math/rand"
 )
 
@@ -50,18 +51,10 @@ func (room *GameRoom) AddClient(client *Client) {
 func NewGameRoom() *GameRoom {
 	world := state.NewWorld()
 
-	world.NewPlayerAt(1, 400, 350)
-	world.Players[1].SetFacing((rand.Float64()) * 2 * 3.1415)
-	world.Players[1].SetVelocity(rand.Float64()*5 + 1)
-	world.Players[1].SetAngularVelocity((rand.Float64() - 0.5) / 6)
-
 	eventHub := events.NewEventHub()
 	physicTicker := gameticker.NewPhysicsTicker(eventHub)
 	updater := simulation.NewUpdater(world, eventHub)
 	eventHub.RegisterTimeTickListener(updater)
-	// TODO: run event loop here
-	go physicTicker.Run()
-	go eventHub.RunEventLoop()
 
 	return &GameRoom{
 		roomID:       1,
@@ -72,6 +65,24 @@ func NewGameRoom() *GameRoom {
 		sender:       NewSender(),
 		physicTicker: physicTicker,
 	}
+}
+
+// Start game room
+func (room *GameRoom) Start() {
+	go room.physicTicker.Run()
+	go room.eventHub.RunEventLoop()
+
+	// TODO: from room.clients -> create players in world
+
+	// for testing
+	room.world.NewPlayerAt(1, 400, 400)
+	room.world.Players[1].SetFacing(math.Pi / 4)
+	room.world.Players[1].SetVelocity(rand.Float64()/4 + 1)
+	//room.world.Players[1].SetAngularVelocity((rand.Float64() - 0.5) / 6)
+}
+
+func (room *GameRoom) Stop() {
+	// Kill all goroutine
 }
 
 //for testing

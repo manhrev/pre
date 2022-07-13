@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func maind() {
+func maini() {
 	renderer.Init()
 	defer renderer.Destroy()
 
@@ -38,11 +38,11 @@ func maind() {
 	id := uint32(0)
 
 	for _ = range time.Tick(20 * time.Millisecond) {
-		if id%30 == 0 {
+		if id%300 == 0 {
 
 			world.NewPlayerAt(id, 400, 350)
 			world.Players[id].SetFacing((rand.Float64()) * 2 * 3.1415)
-			world.Players[id].SetVelocity(rand.Float64()*15 + 1)
+			world.Players[id].SetVelocity(rand.Float64()*5 + 1)
 			world.Players[id].SetAngularVelocity((rand.Float64() - 0.5) / 6)
 			//world.Players[id].SetVelocity(0)
 		}
@@ -65,7 +65,7 @@ func main() {
 	defer renderer.Destroy()
 
 	room := game.NewGameRoom()
-
+	room.Start()
 	world := room.World()
 
 	// objManager := simulation.NewObjectManager(world)
